@@ -92,5 +92,37 @@ namespace MyPcStore.Areas.Admin.Controllers
             return RedirectToAction("AddPage");
 
         }
+
+        //GET: Admin/Pages/AddPage/id
+        public ActionResult EditPage(int id)
+        {
+            //ActionResult as the return type you can return 
+            //view, redirect or partial view. Or content(string) etc  
+
+
+
+            //declare page VM (view model)
+            PageVM model;
+            using (Db db = new Db())
+            {
+                //get page
+                //will select the row with PK of id value
+                PageDTO dto = db.Pages.Find(id);
+                //confirm page exists
+                if (dto == null)
+                {
+                    return Content("Page does not exists.");
+                }
+                //initialize page VM
+
+                model = new PageVM(dto);
+                //I use constructor from the class
+                //othervise I would have to initialize all fields here
+
+            }
+
+            //return view with the model
+            return View(model);
+        }
     }
 }

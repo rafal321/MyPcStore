@@ -7,8 +7,8 @@ using System.Web;
 
 namespace MyPcStore.Models.Data
 {
-    // Data Transfer Object - data going IN??
-    //cause table name and class is different...
+    // Data Transfer Object - data going out of db
+    //'cause table name and class is different...
 
     [Table("tblPages")]
     public class PageDTO
