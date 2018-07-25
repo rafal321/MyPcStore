@@ -26,5 +26,11 @@ namespace MyPcStore.Areas.Admin.Controllers
             //return view with list
             return View(pageslist);
         }
+
+        //GET: Admin/Pages/AddPage
+        public ActionResult AddPage()
+        {
+            return View();
+        }
     }
 }
