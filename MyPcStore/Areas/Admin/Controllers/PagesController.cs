@@ -28,9 +28,69 @@ namespace MyPcStore.Areas.Admin.Controllers
         }
 
         //GET: Admin/Pages/AddPage
+        [HttpGet]
         public ActionResult AddPage()
         {
             return View();
+        }
+
+        //POST: Admin/Pages/AddPage
+        [HttpPost]
+        public ActionResult AddPage(PageVM myModel)
+        {
+            //Check Model State - has to be done after submitting the form
+            if (! ModelState.IsValid)
+            {
+                return View(myModel);
+            }
+
+            using (Db db = new Db())
+            {
+                //Declare the slug
+                string slug;
+
+                //initialize pageDTO
+                PageDTO dto = new PageDTO();
+
+                //DTO title
+                //acces value whats in form when submitted myModel.Title from View AddPage.cshtml
+                //      ...or(model => model.Title, new {...
+                dto.Title = myModel.Title;
+
+                //Check for Slug
+                if (string.IsNullOrWhiteSpace(myModel.Slug))
+                {
+                    slug = myModel.Title.Replace(" ", "- ").ToLower();
+                }
+                else
+                {
+                    slug = myModel.Slug.Replace(" ", "- ").ToLower();
+                }
+
+                //Veryfy if title and slug are not the same
+                //if it's the match that's a problem - check for that
+                if (db.Pages.Any(y => y.Title == myModel.Title) || db.Pages.Any(z => z.Slug == slug))
+                {
+                    // https:  //exceptionnotfound.net/asp-net-mvc-demystified-modelstate/
+                    ModelState.AddModelError("", "This title and/or slug already exists.");
+                    return View(myModel);
+                }
+
+                //DTO 
+                dto.Slug = slug;
+                dto.Body = myModel.Body;
+                dto.HasSidebar = myModel.HasSidebar;
+                //when you add the page, it's gonna be the last page
+
+                dto.Sorting = 100;
+                //DTO Save
+                db.Pages.Add(dto);
+                db.SaveChanges();
+            }
+            //Redirect
+            TempData["SuccessMessage"] = "New Page has been added successfully.";
+            return RedirectToAction("AddPage");
+
         }
     }
 }
