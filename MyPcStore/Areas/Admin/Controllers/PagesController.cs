@@ -182,5 +182,21 @@ namespace MyPcStore.Areas.Admin.Controllers
             return RedirectToAction("EditPage");
             
         }
+        //--------------------------------------------mvc TAB TAB ---
+        //GET: Admin/Pages/Details/id
+        public ActionResult PagesDetails(int id)
+        {
+            //Declare PageVM
+
+            //get the page
+
+            //confirm the page is there
+
+            //initialize model pageVM
+
+            //Return view with model
+
+            return View();
+        }
     }
 }
