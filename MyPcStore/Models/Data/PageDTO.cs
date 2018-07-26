@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MyPcStore.Models.Data
 {
-    // Data Transfer Object - data going out of db
+    // Data Transfer Object - data going out of db for me to use
     //'cause table name and class is different...
 
     [Table("tblPages")]

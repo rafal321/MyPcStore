@@ -187,16 +187,24 @@ namespace MyPcStore.Areas.Admin.Controllers
         public ActionResult PagesDetails(int id)
         {
             //Declare PageVM
+            PageVM model;
 
             //get the page
+            using (Db db = new Db())
+            {
+                //confirm the page is there
+                PageDTO dto = db.Pages.Find(id);
+                
+                if (dto == null)
+                {
+                    return Content("The page does not exists!");
+                }
 
-            //confirm the page is there
-
-            //initialize model pageVM
-
-            //Return view with model
-
-            return View();
+                //initialize model pageVM
+                model = new PageVM(dto);
+                //Return view with model
+            }
+            return View(model);
         }
     }
 }
