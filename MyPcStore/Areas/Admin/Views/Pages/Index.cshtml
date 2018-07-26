@@ -12,7 +12,7 @@
 
 @*condition if model empty - display message*@
 
-@if (! Model.Any())
+@if (!Model.Any())
 {
     <h1 class="text-center text-danger">! There are no pages !</h1>
 }
@@ -61,4 +61,14 @@ else
 
     </table>
 }
+@section Scripts {
+    <script>
+        $(function () {
 
+            /*Confirm page deletion*/
+            $("a.delete").click(function () {
+                if (!confirm("Confirm page deletion")) return false;
+            });
+        });
+    </script>
+}
