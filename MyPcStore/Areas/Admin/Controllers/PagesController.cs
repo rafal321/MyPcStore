@@ -126,7 +126,7 @@ namespace MyPcStore.Areas.Admin.Controllers
             return View(model);
         }
 
-        //POST: Admin/Pages/AddPage/id
+        //POST: Admin/Pages/EditPage/id
         [HttpPost]
         public ActionResult EditPage(PageVM model)
         {
