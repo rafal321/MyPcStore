@@ -26,7 +26,7 @@ namespace MyPcStore.Areas.Admin.Controllers
             //return view with list
             return View(pageslist);
         }
-
+        //-----------------------------------------------------------
         //GET: Admin/Pages/AddPage
         [HttpGet]
         public ActionResult AddPage()
@@ -92,8 +92,9 @@ namespace MyPcStore.Areas.Admin.Controllers
             return RedirectToAction("AddPage");
 
         }
-
-        //GET: Admin/Pages/AddPage/id
+        //-----------------------------------------------------------
+        //GET: Admin/Pages/EditPage/id
+        [HttpGet]
         public ActionResult EditPage(int id)
         {
             //ActionResult as the return type you can return 
@@ -123,6 +124,63 @@ namespace MyPcStore.Areas.Admin.Controllers
 
             //return view with the model
             return View(model);
+        }
+
+        //POST: Admin/Pages/AddPage/id
+        [HttpPost]
+        public ActionResult EditPage(PageVM model)
+        {
+            //check model state
+            if (! ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (Db db = new Db())
+            {
+                //get page id
+                int id = model.Id;
+                //Declare slug
+                string slug = "home";
+                //get the page from the table
+                PageDTO dto = db.Pages.Find(id);
+                //DTO title
+                dto.Title = model.Title;
+                //check for slug if it is not home 
+                if (model.Slug != "home")
+                {
+                    if (string.IsNullOrWhiteSpace(model.Slug))
+                    {
+                        slug = model.Title.Replace(" ", "-").ToLower();
+                    }
+                    else
+                    {
+                        slug = model.Slug.Replace(" ", "-").ToLower();
+                    }
+                }
+                //make sure title and slug are unique
+                if (db.Pages.Where(y => y.Id != id).Any(z => z.Title == model.Title) ||
+                    db.Pages.Where(y => y.Id != id).Any(z => z.Slug == slug))
+                {
+                    ModelState.AddModelError("", "Title and/or slug already exists.");
+                    return View(model);
+                }
+
+                //DTO the rest
+                dto.Slug = slug;
+                dto.Body = model.Body;
+                dto.HasSidebar = model.HasSidebar;
+                //Save DTO
+                db.SaveChanges();
+            }
+
+
+            //Save TempData message
+            TempData["SuccessMessage"] = "You have edited the page.";
+
+            //Redirect
+            return RedirectToAction("EditPage");
+            
         }
     }
 }
