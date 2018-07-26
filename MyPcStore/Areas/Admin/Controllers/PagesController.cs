@@ -183,7 +183,7 @@ namespace MyPcStore.Areas.Admin.Controllers
             
         }
         //--------------------------------------------mvc TAB TAB ---
-        //GET: Admin/Pages/Details/id
+        //GET: Admin/Pages/PageDetails/id
         public ActionResult PageDetails(int id)
         {
             //Declare PageVM
@@ -205,6 +205,22 @@ namespace MyPcStore.Areas.Admin.Controllers
                 //Return view with model
             }
             return View(model);
+        }
+        //-----------------------------------------------------------
+        //GET: Admin/Pages/DeletePage/id
+        public ActionResult DeletePage(int id)
+        {
+            using (Db db = new Db())
+            {
+                //get the page
+                PageDTO dto = db.Pages.Find(id);
+                //remove the page
+                db.Pages.Remove(dto);
+                //save changes 
+                db.SaveChanges();
+            }
+            //redirection
+            return RedirectToAction("Index");
         }
     }
 }
