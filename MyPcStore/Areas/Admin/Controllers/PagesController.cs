@@ -184,7 +184,7 @@ namespace MyPcStore.Areas.Admin.Controllers
         }
         //--------------------------------------------mvc TAB TAB ---
         //GET: Admin/Pages/Details/id
-        public ActionResult PagesDetails(int id)
+        public ActionResult PageDetails(int id)
         {
             //Declare PageVM
             PageVM model;
