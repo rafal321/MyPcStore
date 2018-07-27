@@ -4,7 +4,7 @@ body {
 }
 
 
-
+/*-chapter15- css for drag and drop*/
 table.sorting tr:not(.home) {
     cursor: pointer;
 }
