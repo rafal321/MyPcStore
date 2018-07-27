@@ -5,5 +5,11 @@ body {
 
 
 
+table.sorting tr:not(.home) {
+    cursor: pointer;
+}
+.ui-state-highlight {
+    border: 3px dotted green;
+}
 
 
