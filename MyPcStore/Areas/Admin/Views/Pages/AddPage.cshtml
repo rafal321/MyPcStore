@@ -13,10 +13,10 @@
     </div>
 }
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>PageVMxxx</h4>
         <hr />
@@ -70,6 +70,16 @@
     </div>
 }
 
-<div>   @*back to pages pointing to index method*@
+
+<div>
+    @*back to pages pointing to index method*@
     @Html.ActionLink("Back to Pages", "Index")
 </div>
+
+@section Scripts{
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace("Body");
+    </script>
+}
