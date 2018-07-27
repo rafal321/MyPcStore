@@ -222,5 +222,35 @@ namespace MyPcStore.Areas.Admin.Controllers
             //redirection
             return RedirectToAction("Index");
         }
+        //-----------------------------------------------------------
+        //POST: Admin/Pages/ReorderPages
+        //has to be httpPost - 'cause default is GET
+        [HttpPost]
+        public void ReorderPages(int[] id)
+        {
+            using (Db db =new Db())
+            {
+                //set initial count
+                int count = 1;
+
+                //declare pageDTO
+                PageDTO dto;
+
+                //set sorting for each page
+                foreach (var item in id)
+                {
+                    dto = db.Pages.Find(item);
+                    dto.Sorting = count;
+
+                    db.SaveChanges();
+                    count++;
+                }
+            }
+        }
+
+
+
+
+
     }
 }
