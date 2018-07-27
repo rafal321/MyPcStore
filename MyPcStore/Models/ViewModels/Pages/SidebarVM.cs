@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MyPcStore.Models.ViewModels.Pages
 {
@@ -18,6 +19,7 @@ namespace MyPcStore.Models.ViewModels.Pages
         }
 
         public int Id { get; set; }
+        [AllowHtml]         //chapter 17 - AllowHtml
         public string Body { get; set; }
     }
 }
