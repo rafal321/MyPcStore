@@ -249,6 +249,7 @@ namespace MyPcStore.Areas.Admin.Controllers
         }
         //-----------------------------------------------------------
         //GET: Admin/Pages/EditSidebar
+        [HttpGet]
         public ActionResult EditSidebar()
         {
             //Declare mdel
@@ -263,7 +264,20 @@ namespace MyPcStore.Areas.Admin.Controllers
             }
             return View(model);
         }
-
+        //POST: Admin/Pages/EditSidebar
+        [HttpPost]
+        public ActionResult EditSidebar(SidebarVM model)
+        {
+            using (Db db = new Db())
+            {
+                //get DTO
+                SidebarDTO dto = db.Sidebar.Find(1);
+                dto.Body = model.Body;
+                db.SaveChanges();
+            }
+            TempData["SuccessMessage"] = "Sidebar has been edited.";
+            return RedirectToAction("EditSidebar");
+        }
 
 
     }
