@@ -251,7 +251,17 @@ namespace MyPcStore.Areas.Admin.Controllers
         //GET: Admin/Pages/EditSidebar
         public ActionResult EditSidebar()
         {
-            return View();
+            //Declare mdel
+            SidebarVM model;
+            using (Db db = new Db())
+            {
+                //get DTO
+                //1 hardcoded as it's always gonna be 1
+                SidebarDTO dto = db.Sidebar.Find(1);
+                //Return ViewModel
+                model = new SidebarVM(dto);
+            }
+            return View(model);
         }
 
 
