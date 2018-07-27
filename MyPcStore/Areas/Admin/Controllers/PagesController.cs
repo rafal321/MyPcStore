@@ -247,8 +247,12 @@ namespace MyPcStore.Areas.Admin.Controllers
                 }
             }
         }
-
-
+        //-----------------------------------------------------------
+        //GET: Admin/Pages/EditSidebar
+        public ActionResult EditSidebar()
+        {
+            return View();
+        }
 
 
 
