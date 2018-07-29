@@ -11,7 +11,7 @@ namespace MyPcStore.Models.ViewModels.Shop
         public CategoryVM()
         {
         }
-        public CategoryVM(CategoryVM row)
+        public CategoryVM(CategoryDTO row)
         {
             Id = row.Id;
             Name = row.Name;
