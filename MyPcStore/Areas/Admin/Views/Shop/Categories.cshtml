@@ -54,11 +54,66 @@ else
 
             //+++++++++++++++++++++++++++
             /*Add new category*/
+            var newCatA = $("a#newcata");
+            var newCatTextInput = $("newcatname");
+            var ajaxText = $("span.ajax-text");
+            var table = $("table#pages tbody");
 
+            //catch enter
+            newCatTextInput.keyup(function (event) {
+                if (event.keyCode == 13) {
+                    newCatA.click();
+                }
+            });
+
+            newCatA.click(function (event) {
+                event.preventDefault(); //a
+
+                var catName = newCatTextInput.val();
+
+                if (catName.length < 3) {   //min lenght for category
+                    alert("Minimum 3 characters required!")
+                    return false();
+                }
+
+                ajaxText.show();
+                var url = "/admin/shop/AddNewCategory"; //returns string
+
+                $.post(url, { catName: catName }, function (d) {    //category with value catName
+                    var resp = data.trim();                         //d-data
+                    if (resp == "titletaken") {
+                        ajaxText.html("<span class='alert-danger'>This title is taken!</span>"); //a
+                        //fade out that message
+                        setTimeout(function () {
+                            ajaxText.fadeOut("fast", function () { //callback function
+                                ajaxText.html("<img src=/Content/img/glass-pipe.gif />");
+                            }) //fadeout speed
+                        }, 2500); //delay
+                        return false;
+                    } else {    //if its all ok
+                        if (!$("table#pages").length) {     //if it doesnt exist table with id pages
+                            location.reload();
+                        } else {        //display a message
+                            ajaxText.html("<span class='alert-success'>New Category added!</span>"); //a
+                            //fade out that message
+                            setTimeout(function () {
+                                ajaxText.fadeOut("fast", function () { //callback function
+                                    ajaxText.html("<img src=/Content/img/glass-pipe.gif />");
+                                }) //fadeout speed
+                            }, 2500); //delay
+                            newCatTextInput.val("") //has to be empty
+                            var toAppend = $("table#pages tbody tr:last").clone(); //copy of last tr in table
+                            toAppend.attr("id", "id_" + d);      //tr atribute change + append; id is for sottable plugin
+                            toAppend.find("#item_Name").val(catName);
+                            toAppend.find("a.delete").attr("href", "/admin/shop/DeleteCategory/" + d)    //change delete link for newly added tr
+                            table.append(toAppend);
+                            table.sortable("refresh"); // to autorefresh
+                        }
+                    }
+                });
+            });
 
             //+++++++++++++++++++++++++++
-
-
 
             /*Confirm page deletion*/
             $("a.delete").click(function () {
