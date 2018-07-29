@@ -15,19 +15,37 @@ namespace MyPcStore.Areas.Admin.Controllers
         {
             //return all the rows from category table in this method
             //Declare a list of models
-            List<CategoryVM> categoryVMList;
+            List<CategoryVM> categoryVMList; //declare
 
             using (Db db = new Db())
             {
                 //initialize view models    
-                categoryVMList = db.Categories
-                    .ToArray()
-                    .OrderBy(x => x.Sorting)
-                    .Select(y => new CategoryVM(y)) //need constructor here Alt+f12
-                    .ToList();
+                categoryVMList = db.Categories.ToArray().OrderBy(x => x.Sorting)
+                    .Select(y => new CategoryVM(y)).ToList(); //need constructor here Alt+f12
             }
-            
             return View(categoryVMList);
+        }
+
+        // POSTT: Admin/Shop/AddNewCategory
+        [HttpPost]
+        public string AddNewCategory(string catName) //called by JS in Categories.cshtml
+        {
+            string id;          //declare id
+            using (Db db = new Db())
+            {
+                if (db.Categories.Any(y => y.Name == catName)) //check unique category
+                {
+                    return "titletaken";
+                }
+                CategoryDTO dto = new CategoryDTO(); //initialize dto
+                dto.Name = catName;//add to dto
+                dto.Slug = catName.Replace(" ", "-").ToLower();
+                dto.Sorting = 100;  //same as the pages, newly category is the last one
+                db.Categories.Add(dto);
+                db.SaveChanges();
+                id = dto.Id.ToString(); //need to get Id here!
+            }
+            return id;
         }
     }
 }
