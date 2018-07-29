@@ -12,4 +12,13 @@ table.sorting tr:not(.home) {
     border: 3px dotted green;
 }
 
+div.new-cat {
+    margin-top: 30px;
+    position: relative;
+}
+
+span.ajax-text{
+    display: none;
+}
+
 

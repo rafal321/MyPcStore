@@ -45,3 +45,41 @@ else
 
     </table>
 }
+
+@section Scripts {
+    @* Drag and drop feature *@
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+
+            //+++++++++++++++++++++++++++
+            /*Add new category*/
+
+
+            //+++++++++++++++++++++++++++
+
+
+
+            /*Confirm page deletion*/
+            $("a.delete").click(function () {
+                if (!confirm("Confirm page deletion")) return false;
+            });
+
+            /*Pages sorting*/
+
+            $("table#pages tbody").sortable({
+                items: "tr:not(.home)",
+                placeholder: "ui-state-highlight",
+                update: function () {
+                    var ids = $("table#pages tbody").sortable("serialize");
+                    var url = "/Admin/Pages/ReorderPages";
+
+                    $.post(url, ids, function (data) {
+                    });
+                }
+            });
+
+
+        });
+    </script>
+}
