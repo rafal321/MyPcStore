@@ -34,6 +34,7 @@ else
         {
             <tr id="id_@item.Id">
                 <td>
+                    <div class="ajaxdivtd"></div>
                     @*readonly - to be editable when double clicked*@
                     @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </td>
@@ -139,13 +140,68 @@ else
 
             //+++++++++++++++++++++++++++
 
-            /*Reorder categoriesss*/
+            /*Confirm category deletion*/
 
 
             $("body").on("click", "a.delete", function () {
                 if (!confirm("Confirm page deletion")) return false;
             });
             //+++++++++++++++++++++++++++++
+
+
+
+            /*Rename category*/
+
+
+            var orginalTextBoxVal;
+
+            $("table#pages input.text-box").dblclick(function () {
+                orginalTextBoxVal = $(this).val();
+                $(this).attr("readonly", false);
+            });
+
+            $("table#pages input.text-box").keyup(function (event) {
+                if (event.keyCode == 13) {
+                    $(this).blur();
+                }
+            });
+
+            $("table#pages input.text-box").blur(function () {
+                var $this = $(this);
+                var ajaxdiv = $this.parent().find(".ajaxdivtd");
+                var newCatName = $this.val();
+                var id = $this.parent().parent().attr("id").substring(3);
+                var url = "/admin/shop/RenameCategory";
+
+                if (newCatName.length < 3) {   //min lenght for category
+                    alert("Minimum 3 characters required!");
+                    $this.attr("readonly", true);
+                    return false;
+                }
+
+                $.post(url, { newCatName: newCatName, id: id }, function (d) {
+                    var response = d.trim();
+
+                    if (response == "titletaken") {
+                        $this.val(orginalTextBoxVal);
+                        ajaxdiv.html("<span class='alert alert-danger'>That title already exists!</span>").show();
+                    } else {
+                        ajaxdiv.html("<span class='alert alert-success'>The category name has been changed.</span>").show();
+                    }
+
+                    setTimeout(function () {
+                        ajaxdiv.fadeOut("fast", function () {
+                            ajaxdiv.html("");
+                        });
+                    }, 3000);
+                    }).done(function () {
+                        $this.attr("readonly", true);
+
+                });
+
+            });
+
+            //+++++++++++++++++++++++++++++++++++++
 
         });
     </script>

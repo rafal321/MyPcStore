@@ -89,5 +89,24 @@ namespace MyPcStore.Areas.Admin.Controllers
             return RedirectToAction("Categories");
         }
 
+        //POST: Admin/shop/RenameCategory
+        [HttpPost]
+        public string RenameCategory(string newCatName, int id)
+        {
+            using (Db db = new Db())
+            {
+                //is category unique?
+                if (db.Categories.Any(y => y.Name == newCatName))
+                {
+                    return "titletaken";
+                }
+                CategoryDTO dto = db.Categories.Find(id);
+                // edit this DTO
+                dto.Name = newCatName;
+                dto.Slug = newCatName.Replace(" ", "-").ToLower();
+                db.SaveChanges();
+            }
+            return "something";
+        }
     }
 }
