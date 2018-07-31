@@ -22,7 +22,7 @@
 }
 else
 {
-    <table class="table sorting" id="pages">
+    <table class="table sorting categories" id="pages">
         <tr class="home">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -32,7 +32,7 @@ else
 
         @foreach (var item in Model)
         {
-            <tr>
+            <tr id="id_@item.Id">
                 <td>
                     @*readonly - to be editable when double clicked*@
                     @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
@@ -118,31 +118,33 @@ else
                             table.sortable("refresh"); // to autorefresh
                         }
                     }
-
                 });
             });
-
-            //+++++++++++++++++++++++++++
-
-            /*Confirm page deletion*/
-            $("a.delete").click(function () {
-                if (!confirm("Confirm page deletion")) return false;
-            });
-
-            /*Pages sorting*/
+              //+++++++++++++++++++++++++++++++
+            /*Confirm category deletion*/
 
             $("table#pages tbody").sortable({
                 items: "tr:not(.home)",
                 placeholder: "ui-state-highlight",
                 update: function () {
                     var ids = $("table#pages tbody").sortable("serialize");
-                    var url = "/Admin/Pages/ReorderPages";
+                    var url = "/Admin/Shop/ReorderCategories";
 
                     $.post(url, ids, function (data) {
                     });
                 }
             });
 
+          
+
+            //+++++++++++++++++++++++++++
+
+            /*Reorder categoriesss*/
+
+            $("a.delete").click(function () {
+                if (!confirm("Confirm page deletion")) return false;
+            });
+            //+++++++++++++++++++++++++++++
 
         });
     </script>

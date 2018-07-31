@@ -47,5 +47,33 @@ namespace MyPcStore.Areas.Admin.Controllers
             }
             return id;
         }
+
+        //POST: Admin/Pages/ReorderCategories
+        //has to be httpPost - 'cause default is GET
+        [HttpPost]
+        public void ReorderCategories(int[] id)
+        {
+            using (Db db = new Db())
+            {
+                //set initial count
+                int count = 1;
+
+                //declare categoryDTO
+                CategoryDTO dto;
+
+                //set sorting for each categoryy
+                foreach (var item in id)
+                {
+                    dto = db.Categories.Find(item);
+                    dto.Sorting = count;
+
+                    db.SaveChanges();
+                    count++;
+                }
+            }
+        }
+
+
+
     }
 }
