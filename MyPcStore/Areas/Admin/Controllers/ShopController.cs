@@ -48,7 +48,7 @@ namespace MyPcStore.Areas.Admin.Controllers
             return id;
         }
 
-        //POST: Admin/Pages/ReorderCategories
+        //POST: Admin/shop/ReorderCategories
         //has to be httpPost - 'cause default is GET
         [HttpPost]
         public void ReorderCategories(int[] id)
@@ -73,7 +73,21 @@ namespace MyPcStore.Areas.Admin.Controllers
             }
         }
 
-
+        //GET: Admin/shop/DeleteCategory/id
+        public ActionResult DeleteCategory(int id)
+        {
+            using (Db db = new Db())
+            {
+                //get the category
+                CategoryDTO dto = db.Categories.Find(id);
+                //remove the category
+                db.Categories.Remove(dto);
+                //save changes 
+                db.SaveChanges();
+            }
+            //redirection
+            return RedirectToAction("Categories");
+        }
 
     }
 }

@@ -141,7 +141,8 @@ else
 
             /*Reorder categoriesss*/
 
-            $("a.delete").click(function () {
+
+            $("body").on("click", "a.delete", function () {
                 if (!confirm("Confirm page deletion")) return false;
             });
             //+++++++++++++++++++++++++++++
