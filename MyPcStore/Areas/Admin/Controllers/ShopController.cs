@@ -108,5 +108,18 @@ namespace MyPcStore.Areas.Admin.Controllers
             }
             return "something";
         }
+
+        //POST: Admin/shop/AddProduct
+        public ActionResult AddProduct()
+        {
+            ProductVM myModel = new ProductVM();
+            using (Db db = new Db())
+            {
+                myModel.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+            }
+
+            return View(myModel);
+        }
+
     }
 }
