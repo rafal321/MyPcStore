@@ -2,8 +2,10 @@
 using MyPcStore.Models.ViewModels.Shop;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace MyPcStore.Areas.Admin.Controllers
@@ -110,6 +112,7 @@ namespace MyPcStore.Areas.Admin.Controllers
         }
 
         //POST: Admin/shop/AddProduct
+        [HttpGet]
         public ActionResult AddProduct()
         {
             ProductVM myModel = new ProductVM();
@@ -119,6 +122,136 @@ namespace MyPcStore.Areas.Admin.Controllers
             }
 
             return View(myModel);
+        }
+
+        //POST: Admin/shop/AddProduct
+        [HttpPost]
+        public ActionResult AddProduct(ProductVM myModel, HttpPostedFileBase file)
+        {
+            // Check model VMstate
+            if (!ModelState.IsValid)
+            {
+                using (Db db = new Db())
+                {
+                    myModel.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+                    return View(myModel);
+                }
+            }
+
+            // uniquiness of product
+            using (Db db = new Db())
+            {
+                if (db.Products.Any(y => y.Name == myModel.Name))
+                {
+                    myModel.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+                    ModelState.AddModelError("", "This product name is already taken!");
+                    return View(myModel);
+                }
+            }
+
+            
+            int id; // product id declared
+
+            // Init and save productDTO
+            using (Db db = new Db())
+            {
+                ProductDTO product = new ProductDTO();
+
+                product.Name = myModel.Name;
+                product.Slug = myModel.Name.Replace(" ", "-").ToLower();
+                product.Description = myModel.Description;
+                product.Price = myModel.Price;
+                product.CategoryId = myModel.CategoryId;
+
+                CategoryDTO catDTO = db.Categories.FirstOrDefault(y => y.Id == myModel.CategoryId);
+                product.CategoryName = catDTO.Name;     //categoryId in productVM is a foreign key
+                db.Products.Add(product);              //in categories table
+                db.SaveChanges();
+
+                
+                id = product.Id; // Get the id - is PK of just inserted  with ProductDTO product = new ProductDTO();
+            }
+
+            // Set TempData message
+            TempData["SuccessMessage"] = "You have added a product.";
+
+            #region Upload Image
+
+            // create directories
+            var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\"))); //specyfy
+
+            var pathString1 = Path.Combine(originalDirectory.ToString(), "Products");
+            var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString()); //specific product
+            var pathString3 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs"); //main image thumb
+            var pathString4 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery"); //gallery immages
+            var pathString5 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs"); //x
+
+            if (!Directory.Exists(pathString1)) //has to check if directory exists
+                Directory.CreateDirectory(pathString1);
+
+            if (!Directory.Exists(pathString2))//has to check if directory exists
+                Directory.CreateDirectory(pathString2);
+
+            if (!Directory.Exists(pathString3))//has to check if directory exists
+                Directory.CreateDirectory(pathString3);
+
+            if (!Directory.Exists(pathString4))//has to check if directory exists
+                Directory.CreateDirectory(pathString4);
+
+            if (!Directory.Exists(pathString5))//has to check if directory exists
+                Directory.CreateDirectory(pathString5);
+
+            // doublecheck if a file was properly uploaded
+            if (file != null && file.ContentLength > 0) //check
+            {
+                
+                string ext = file.ContentType.ToLower(); // get file extension
+
+                // Verify files extensions
+                if (ext != "image/jpg" && ext != "image/jpeg" && ext != "image/pjpeg" &&
+                    ext != "image/gif" && ext != "image/x-png" && ext != "image/png")
+                {
+
+                    //if its not then there's problem
+
+                    using (Db db = new Db())
+                    {
+                        myModel.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+                        ModelState.AddModelError("", "Image was not uploaded - unsupported type.");
+                        return View(myModel);
+                    }
+                }
+
+
+                //string imageName = file.FileName; // Initialize image name CREATES ERROR!
+                string imageName = new FileInfo(file.FileName).Name; //Works in Edge/Chrome/FF
+
+                // ssave image name to DTO
+                using (Db db = new Db())
+                {
+                    ProductDTO dto = db.Products.Find(id);
+                    dto.ImageName = imageName;
+
+                    db.SaveChanges();
+                }
+
+                // sset original and thumb image paths
+                var path = string.Format("{0}\\{1}", pathString2, imageName); //thumb
+                var path2 = string.Format("{0}\\{1}", pathString3, imageName);//image paths
+
+                // Save original
+                file.SaveAs(path);
+
+                // create and save thumbnails
+                WebImage img = new WebImage(file.InputStream); //set
+                img.Resize(180, 180);
+                img.Save(path2);
+            }
+
+            #endregion
+
+            
+            return RedirectToAction("AddProduct");// redirection
         }
 
     }
