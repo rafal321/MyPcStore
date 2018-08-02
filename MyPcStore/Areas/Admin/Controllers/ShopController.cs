@@ -319,7 +319,124 @@ namespace MyPcStore.Areas.Admin.Controllers
             return View(myModel);
         }
 
+        // POST: Admin/Shop/EditProduct/id
+        [HttpPost]
+        public ActionResult EditProduct(ProductVM myModel, HttpPostedFileBase file)
+        {
+            // Get product id
+            int id = myModel.Id;
 
+            // opulate categories select list and gallery of images
+            //so I dont have to do it each time
+            using (Db db = new Db())
+            {
+                myModel.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+            }
+            myModel.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                                                .Select(fileName => Path.GetFileName(fileName));
+
+            // check current model state
+            if (!ModelState.IsValid)
+            {
+                return View(myModel);
+            }
+
+            // check if product name is unique
+            using (Db db = new Db())
+            {
+                if (db.Products.Where(y => y.Id != id).Any(y => y.Name == myModel.Name))
+                {
+                    ModelState.AddModelError("", "This product name is taken!");
+                    return View(myModel);
+                }
+            }
+
+            // update the product
+            using (Db db = new Db())
+            {
+                ProductDTO dto = db.Products.Find(id);
+
+                dto.Name = myModel.Name;
+                dto.Slug = myModel.Name.Replace(" ", "-").ToLower();
+                dto.Description = myModel.Description;
+                dto.Price = myModel.Price;
+                dto.CategoryId = myModel.CategoryId;
+                dto.ImageName = myModel.ImageName;
+
+                CategoryDTO catDTO = db.Categories.FirstOrDefault(y => y.Id == myModel.CategoryId);
+                dto.CategoryName = catDTO.Name;
+
+                db.SaveChanges();
+            }
+
+            // Set TempData message
+            TempData["SuccessMessage"] = "You have edited the product!";
+
+            #region Image Upload
+
+            // file upload check
+            if (file != null && file.ContentLength > 0)
+            {
+
+                // extensions
+                string ext = file.ContentType.ToLower();
+
+                // extension verification
+                if (ext != "image/jpg" && ext != "image/jpeg" && ext != "image/pjpeg" && 
+                    ext != "image/gif" && ext != "image/x-png" && ext != "image/png")
+                {
+                    using (Db db = new Db())
+                    {
+                        ModelState.AddModelError("", "Image was not uploaded - unsupported type.");
+                        return View(myModel);
+                    }
+                }
+
+                // directory paths setup for upload
+                var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+
+                var pathString1 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+                var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
+
+                // files deletion from directories
+
+                DirectoryInfo di1 = new DirectoryInfo(pathString1);
+                DirectoryInfo di2 = new DirectoryInfo(pathString2);
+
+                foreach (FileInfo file2 in di1.GetFiles())
+                    file2.Delete();
+
+                foreach (FileInfo file3 in di2.GetFiles())
+                    file3.Delete();
+
+                // save name of image
+                //string imageName = file.FileName; // Initialize image name CREATES ERROR!
+                string imageName = new FileInfo(file.FileName).Name; //Works in Edge/Chrome/FF
+
+
+                using (Db db = new Db())
+                {
+                    ProductDTO dto = db.Products.Find(id);
+                    dto.ImageName = imageName;
+
+                    db.SaveChanges();
+                }
+
+                // ssave original and thumb images
+                var path = string.Format("{0}\\{1}", pathString1, imageName);
+                var path2 = string.Format("{0}\\{1}", pathString2, imageName);
+
+                file.SaveAs(path);
+
+                WebImage img = new WebImage(file.InputStream);
+                img.Resize(180, 180);
+                img.Save(path2);
+            }
+
+            #endregion
+
+            return RedirectToAction("EditProduct");
+        }
 
 
     }

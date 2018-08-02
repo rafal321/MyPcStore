@@ -1,15 +1,33 @@
 ﻿@model MyPcStore.Models.ViewModels.Shop.ProductVM
 
 @{
-    ViewBag.Title = "EditProduct";
+    ViewBag.Title = "Edit Product";
 }
 
-<h2>EditProduct</h2>
+<h2>Edit Product</h2>
 
-@using (Html.BeginForm())
+<div>
+    @Html.ActionLink("Back to Products", "Products")
+</div>
+
+<style>
+    input#ImageName {
+        display: none;
+    }
+</style>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+
+@using (Html.BeginForm("EditProduct", "Shop", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>ProductVM</h4>
         <hr />
@@ -25,17 +43,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Slug, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,37 +59,68 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="HasSidebar">Category</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.CategoryId, Model.Categories, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="HasSidebar">Image Name</label>
+            @Html.EditorFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImageName, "", new { @class = "text-danger" })
+                <img src="/images/uploads/products/@Model.Id/Thumbs/@Model.ImageName" alt="Alternate Text" />
+                <br />
+                <br />
+                <img id="imgpreview" src="#" />
+                <br />
+                <br />
+                <div class="col-md-10">
+                    <input type="file" name="file" id="ImageUpload" />
+                </div>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Edit Product" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section Scripts {
+    @* Drag and drop feature *@
+
+    <script>
+        $(function () {
+
+
+            //so we can preview selected img
+
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+
+                    reader.onload = function (event) {
+                        $("img#imgpreview").attr("src", event.target.result)
+                            .width(200).height(200);
+                    }
+
+
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#ImageUpload").change(function () {
+                readURL(this);
+            });
+
+        });
+    </script>
+}
+
