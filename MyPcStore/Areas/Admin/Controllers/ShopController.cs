@@ -287,5 +287,40 @@ namespace MyPcStore.Areas.Admin.Controllers
             return View(myListOfProductVM);
         }
 
+        // GET: Admin/Shop/EditProduct/id
+        [HttpGet]
+        public ActionResult EditProduct(int id)
+        {
+            // Declare product vie model
+            ProductVM myModel;
+
+            using (Db db = new Db())
+            {
+                
+                ProductDTO dto = db.Products.Find(id);
+
+                // check if product exists
+                if (dto == null)
+                {
+                    return Content("This product does not exist.");
+                }
+
+                // init model
+                myModel = new ProductVM(dto);
+
+                // make a selecedt list
+                myModel.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+
+                // gallery images comes from IEnumerable<string> GaleryImages ..... from ProductVM
+                myModel.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                                                .Select(fileName => Path.GetFileName(fileName));
+                //returns list of IEnumerable of files
+            }
+            return View(myModel);
+        }
+
+
+
+
     }
 }

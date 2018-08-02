@@ -33,9 +33,6 @@
             Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Slug)
-        </th>
-        <th>
             Description
         </th>
         <th>
@@ -82,9 +79,8 @@
 
         $(function () {
 
-            /*
-            * Select products from specified category
-            */
+            
+            /* Select products from specified category*/
 
             $("#SelectCategory").on("change", function () {
                 var url = $(this).val();
@@ -95,12 +91,8 @@
 
                 return false;
             });
-
-
-
-            /*
-            * Confirm product deletion
-            */
+            
+            /* Confirm product deletion */
 
             $("a.delete").click(function () {
                 if (!confirm("Confirm product deletion")) return false;
