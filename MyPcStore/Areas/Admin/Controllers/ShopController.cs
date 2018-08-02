@@ -1,5 +1,6 @@
 ﻿using MyPcStore.Models.Data;
 using MyPcStore.Models.ViewModels.Shop;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -252,6 +253,38 @@ namespace MyPcStore.Areas.Admin.Controllers
 
             
             return RedirectToAction("AddProduct");// redirection
+        }
+
+        // gGET: Admin/Shop/Products
+        public ActionResult Products(int? page, int? catId)
+        {
+            //https:  //github.com/troygoode/PagedList
+            // declare a list ProductVM
+
+            List<ProductVM> myListOfProductVM;
+
+            // page number - setting
+            var pageNumber = page ?? 1;
+
+            using (Db db = new Db())
+            {
+                // Initialize the list
+                myListOfProductVM = db.Products.ToArray().Where(y => catId == null || catId == 0 || y.CategoryId == catId)
+                                  .Select(y => new ProductVM(y)).ToList();
+
+                // populate categories select list - for only one select of categories
+                ViewBag.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+
+                // for setting selected category
+                ViewBag.SelectedCat = catId.ToString();
+            }
+
+            // pagination setup
+            var onePageOfProducts = myListOfProductVM.ToPagedList(pageNumber, 3); //num of pages low, so i can see
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+
+            
+            return View(myListOfProductVM);
         }
 
     }
