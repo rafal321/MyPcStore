@@ -439,5 +439,28 @@ namespace MyPcStore.Areas.Admin.Controllers
         }
 
 
+        // GET: Admin/Shop/DeleteProduct/id
+        public ActionResult DeleteProduct(int id)
+        {
+            // delete product from database
+            using (Db db = new Db())
+            {
+                ProductDTO dto = db.Products.Find(id);
+                db.Products.Remove(dto);
+
+                db.SaveChanges();
+            }
+
+            // also delete product folder
+            var originalDir = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+            string pathString = Path.Combine(originalDir.ToString(), "Products\\" + id.ToString());
+
+            if (Directory.Exists(pathString))           //folders are read only
+                Directory.Delete(pathString, true);     //true  - also deletes files and subdir
+
+            
+            return RedirectToAction("Products"); // redirection
+        }
+
     }
 }
