@@ -462,5 +462,39 @@ namespace MyPcStore.Areas.Admin.Controllers
             return RedirectToAction("Products"); // redirection
         }
 
+
+        // POST: Admin/Shop/SaveGalleryImages
+        [HttpPost]
+        public void SaveGalleryImages(int id) //Id coming from EditProduct.cshtml formData.append("id", @Model.Id);
+        {                                           // JS for dropzone section
+            // loop through all files
+            foreach (string fileName in Request.Files)
+            {
+                // initialize the file
+                HttpPostedFileBase file = Request.Files[fileName];
+
+                // check check it's not null
+                if (file != null && file.ContentLength > 0)
+                {
+                    // has to set directory paths
+                    var originalDir = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+
+                    string pathString1 = Path.Combine(originalDir.ToString(), "Products\\" + id.ToString() + "\\Gallery");
+                    string pathString2 = Path.Combine(originalDir.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
+
+                    
+                    var path = string.Format("{0}\\{1}", pathString1, file.FileName);   // set the image paths
+                    var path2 = string.Format("{0}\\{1}", pathString2, file.FileName);  // set the image paths
+
+
+                    file.SaveAs(path); // Save original and thumbnails
+                    WebImage img = new WebImage(file.InputStream);
+                    img.Resize(180, 180);
+                    img.Save(path2);
+                }
+
+            }
+
+        }
     }
 }
