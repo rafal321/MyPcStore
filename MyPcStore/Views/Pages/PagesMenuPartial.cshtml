@@ -1,0 +1,8 @@
+﻿@model IEnumerable<MyPcStore.Models.ViewModels.Pages.PageVM>
+
+
+
+@foreach (var item in Model) {
+    <li><a href="/@item.Slug">@item.Title</a></li>
+}
+
