@@ -91,7 +91,7 @@ else
                         ajaxText.html("<span class='alert alert-danger'>That title already exists!</span>"); 
                         setTimeout(function () {
                             //fade out that message
-                            ajaxText.fadeOut("fast", function () {  //callback function
+                            ajaxText.fadeOut("slow", function () {  //callback function
                                 ajaxText.html("<img src=/Content/img/glass-pipe.gif />");
                             });         //fadeout speed
                         }, 3000);       //delay
@@ -104,7 +104,7 @@ else
                             ajaxText.html("<span class='alert alert-success'>New Category added!");
                             //fade out that message
                             setTimeout(function () {
-                                ajaxText.fadeOut("fast", function () { //callback function
+                                ajaxText.fadeOut("slow", function () { //callback function
                                     ajaxText.html("<img src=/Content/img/ajax-loader.gif />");
                                 });     //fadeout speed
                             }, 3000);   //delay

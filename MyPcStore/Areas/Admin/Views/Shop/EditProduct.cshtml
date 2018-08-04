@@ -163,7 +163,26 @@
             }
             };
 
+
+            /*  JS for dropzone  */
+
+            $("a.deleteimage").click(function (event) {
+                event.preventDefault();
+
+                if (!confirm("Confirm Image deletion")) return false;
+
+                var $this = $(this);
+                var url = "/admin/shop/DeleteImage";
+                var imageName = $this.data("name");
+
+                $.post(url, { id: @Model.Id, imageName: imageName }, function(data) {
+                    $this.parent().fadeOut("slow");
+                });
+
+            });
+
         });
+      
     </script>
 }
 
