@@ -28,21 +28,27 @@
     <div class="container body-content">
         <div class="row">
 
-            @if (ViewBag.Sidebar == "Yes") 
-            {
-                <div class="col-xs-12 col-md-7">
-                    @RenderBody()
-                </div>
-                <div class="col-xs-12 col-md-3">
-                    @Html.Action("SidebarPartial", "Pages")
-                </div>
-            }
-            else
-            {
-                <div class="col-xs-12 col-md-10">
-                    @RenderBody()
-                </div>
-            }
+            
+            <div class="col-xs-12 col-md-2">
+                @Html.Action("CategoryMenuPartial", "Shop")
+            </div>
+            
+
+            @if (ViewBag.Sidebar == "Yes")
+    {
+        <div class="col-xs-12 col-md-7">
+            @RenderBody()
+        </div>
+        <div class="col-xs-12 col-md-3">
+            @Html.Action("SidebarPartial", "Pages")
+        </div>
+}
+else
+{
+        <div class="col-xs-12 col-md-10">
+            @RenderBody()
+        </div>
+}
 
         </div>
         <hr />
