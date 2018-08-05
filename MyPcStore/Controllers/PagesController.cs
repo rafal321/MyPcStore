@@ -67,7 +67,20 @@ namespace MyPcStore.Controllers
             return PartialView(pagesVMList); // return partial view with the list
         }
 
+        public ActionResult SidebarPartial()
+        {
+            
+            SidebarVM myModel; //model
 
+            using (Db db = new Db())
+            {
+                SidebarDTO dto = db.Sidebar.Find(1);
+
+                myModel = new SidebarVM(dto);
+            }
+
+            return PartialView(myModel);
+        }
 
     }
 }
