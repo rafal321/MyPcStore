@@ -29,5 +29,27 @@ namespace MyPcStore.Controllers
             
             return PartialView(catVMList);// return partial with list
         }
+
+        // get; /shop/category/name
+        public ActionResult Category(string name)
+        {
+            
+            List<ProductVM> prodVMList; // declare a list
+
+            using (Db db = new Db())
+            {
+                // category id
+                CategoryDTO categoryDTO = db.Categories.Where(z => z.Slug == name).FirstOrDefault();
+                int catId = categoryDTO.Id;
+
+                // initialize the list
+                prodVMList = db.Products.ToArray().Where(z => z.CategoryId == catId).Select(z => new ProductVM(z)).ToList();
+
+                // category name
+                var prodCat = db.Products.Where(x => x.CategoryId == catId).FirstOrDefault();
+                ViewBag.CategoryName = prodCat.CategoryName;
+            }
+            return View(prodVMList);
+        }
     }
 }
