@@ -2,6 +2,7 @@
 using MyPcStore.Models.ViewModels.Shop;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -51,5 +52,41 @@ namespace MyPcStore.Controllers
             }
             return View(prodVMList);
         }
+
+        // GET /shop/product-details/name
+        [ActionName("product-details")] //name is category name
+        public ActionResult ProductDetails(string name)
+        {                       
+            ProductVM myModel;
+            ProductDTO dto;
+
+            int id = 0;// initialize product id
+
+            using (Db db = new Db())
+            {
+                // Check if product exists
+                if (!db.Products.Any(y => y.Slug.Equals(name)))
+                {
+                    return RedirectToAction("Index", "Shop");
+                }
+
+                // Initialize productDTO
+                dto = db.Products.Where(y => y.Slug == name).FirstOrDefault();
+
+                
+                id = dto.Id;    // Get id
+
+                // Init model
+                myModel = new ProductVM(dto);
+            }
+
+            // get gallery images.
+            myModel.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                                                .Select(fn => Path.GetFileName(fn));
+
+            
+            return View("ProductDetails", myModel); // return view with model
+        }
+
     }
 }
