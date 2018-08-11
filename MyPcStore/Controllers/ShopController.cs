@@ -53,18 +53,19 @@ namespace MyPcStore.Controllers
             return View(prodVMList);
         }
 
+        //------------------------------------------------------------
         // GET /shop/product-details/name
-        [ActionName("product-details")] //name is category name
+        [ActionName("product-details")]
         public ActionResult ProductDetails(string name)
-        {                       
+        {
             ProductVM myModel;
             ProductDTO dto;
-
-            int id = 0;// initialize product id
+                        
+            int id = 0; // Init product id
 
             using (Db db = new Db())
             {
-                // Check if product exists
+                // Check if product existss
                 if (!db.Products.Any(y => y.Slug.Equals(name)))
                 {
                     return RedirectToAction("Index", "Shop");
@@ -73,19 +74,18 @@ namespace MyPcStore.Controllers
                 // Initialize productDTO
                 dto = db.Products.Where(y => y.Slug == name).FirstOrDefault();
 
-                
-                id = dto.Id;    // Get id
+               
+                id = dto.Id;
 
                 // Init model
                 myModel = new ProductVM(dto);
             }
 
-            // get gallery images.
+            // gallery images
             myModel.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
-                                                .Select(fn => Path.GetFileName(fn));
-
+                                                .Select(f => Path.GetFileName(f));
             
-            return View("ProductDetails", myModel); // return view with model
+            return View("ProductDetails", myModel);
         }
 
     }

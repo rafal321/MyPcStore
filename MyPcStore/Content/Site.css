@@ -30,5 +30,20 @@ table.sorting.categories td{
     position: absolute;
 }
 
+/*C:\Users\RafKi\source\repos\MyPcStore\MyPcStore\Views\Shop\ProductDetails.cshtml*/
+/*rozdzial44  to co po prawej*/
+span.loader {
+    display:none;
+}
+
+span.ajaxmsg{
+    background: green;
+    color:white;
+    padding:10px;
+    display: none;
+    position: absolute;
+    bottom: 0;
+}
+
 
 
