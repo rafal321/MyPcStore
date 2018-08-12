@@ -12,7 +12,30 @@ namespace MyPcStore.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            return View();
+            // cart list - initialize
+                    //The ?? operator is called the null - coalescing operator
+                    //It's used to define a default value for nullable value types or reference types
+                    //It returns the left-hand operand if the operand is not null
+                    //Otherwise it returns the right operand
+
+            var myCart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
+
+            // check cart for empty
+            if (myCart.Count == 0 || Session["cart"] == null)
+            {
+                ViewBag.Message = "Your cart is empty.";
+                return View();
+            }
+
+            decimal total = 0m;         // calculate total and save to ViewBag
+
+            foreach (var item in myCart)
+            {
+                total += item.Total;
+            }
+            ViewBag.GrandTotal = total; //return
+            
+            return View(myCart);
         }
 
         public ActionResult CartPartial()
