@@ -1,4 +1,5 @@
-﻿using MyPcStore.Models.ViewModels.Cart;
+﻿using MyPcStore.Models.Data;
+using MyPcStore.Models.ViewModels.Cart;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +67,56 @@ namespace MyPcStore.Controllers
             }
             return PartialView(myModel);
         }
+        //------------------------------------------------------------
+        public ActionResult AddToCartPartial(int id)
+        {
+            List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
 
+            CartVM myModel = new CartVM();
 
+            using (Db db = new Db())
+            {
+                // get product
+                ProductDTO myProduct = db.Products.Find(id);
+
+                // veryfy if product is already in cart
+                var productInCart = cart.FirstOrDefault(y => y.ProductId == id);
+
+                
+                if (productInCart == null)  // if not, add new
+                {
+                    cart.Add(new CartVM()
+                    {
+                        ProductId = myProduct.Id,
+                        ProductName = myProduct.Name,
+                        Quantity = 1,
+                        Price = myProduct.Price,
+                        Image = myProduct.ImageName
+                    });
+                }
+                else
+                {
+                    productInCart.Quantity++;        // increment
+                }
+            }
+            // Get total:
+            //qty; price and add to model
+            int qty = 0;        ///set to zero
+            decimal price = 0m;
+
+            foreach (var item in cart)
+            {
+                qty += item.Quantity;
+                price += item.Quantity * item.Price;
+            }
+
+            myModel.Quantity = qty;
+            myModel.Price = price;
+            
+            Session["cart"] = cart; // save cart back to session
+
+            // Return partial view with model
+            return PartialView(myModel);
+        }
     }
 }
