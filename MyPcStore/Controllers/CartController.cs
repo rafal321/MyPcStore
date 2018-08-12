@@ -66,5 +66,7 @@ namespace MyPcStore.Controllers
             }
             return PartialView(myModel);
         }
+
+
     }
 }
