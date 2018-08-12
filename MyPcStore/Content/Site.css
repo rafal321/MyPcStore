@@ -45,5 +45,14 @@ span.ajaxmsg{
     bottom: 0;
 }
 
+/*rozd46 top right corner position adjustments CartVM*/
 
+.ajaxcart {
+    background: gray;
+    position: relative;
+    top: 5px;
+    border-radius: 10px;
+    border: 2px solid #73AD21;
+    padding: 5px;
+}
 
