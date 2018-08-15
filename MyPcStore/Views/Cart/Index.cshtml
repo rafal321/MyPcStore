@@ -48,7 +48,7 @@ else
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                $@Html.DisplayFor(modelItem => item.Price)
+                &euro;@Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
                 <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
@@ -70,7 +70,7 @@ else
             <td></td>
             <td></td>
             <td></td>
-            <td>&euro;@ViewBag.GrandTotal</td>
+            <td class="grandtotal" ><b>Grand Toral: </b>&euro;<span>@ViewBag.GrandTotal</span></td>
         </tr>
     </table>
 }
