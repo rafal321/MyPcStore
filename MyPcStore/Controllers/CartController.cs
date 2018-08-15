@@ -118,5 +118,27 @@ namespace MyPcStore.Controllers
             // Return partial view with model
             return PartialView(myModel);
         }
+
+        // GET: /Cart/IncrementProduct
+        public JsonResult IncrementProduct(int productId)
+        {
+            
+            List<CartVM> cart = Session["cart"] as List<CartVM>; //this is
+
+            using (Db db = new Db())
+            {
+                // gget cartVM from list
+                CartVM myModel = cart.FirstOrDefault(y => y.ProductId == productId);
+
+                // increment quantity
+                myModel.Quantity++;
+                
+                var result = new { qty = myModel.Quantity, price = myModel.Price };// store  data
+                
+                return Json(result, JsonRequestBehavior.AllowGet);// return json with all data
+            }
+
+        }
+
     }
 }
