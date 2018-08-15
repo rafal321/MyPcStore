@@ -171,5 +171,22 @@ namespace MyPcStore.Controllers
 
         }
 
+        // GET: /Cart/RemoveProduct
+        public void RemoveProduct(int productId)
+        {
+            
+            List<CartVM> cart = Session["cart"] as List<CartVM>; // initialize cart list
+
+            using (Db db = new Db())
+            {
+                // list - get model
+                CartVM myModel = cart.FirstOrDefault(y => y.ProductId == productId);
+
+                // list - remove model 
+                cart.Remove(myModel);
+            }
+
+        }
+
     }
 }
