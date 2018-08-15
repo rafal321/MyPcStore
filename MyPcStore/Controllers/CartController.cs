@@ -140,5 +140,36 @@ namespace MyPcStore.Controllers
 
         }
 
+        // GET: /Cart/DecrementProduct
+        public ActionResult DecrementProduct(int productId)
+        {
+            
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            using (Db db = new Db())
+            {
+                // get model from  my list
+                CartVM myModel = cart.FirstOrDefault(y => y.ProductId == productId);
+
+                // decrement quantity
+                if (myModel.Quantity > 1)
+                {
+                    myModel.Quantity--;
+                }
+                else
+                {
+                    myModel.Quantity = 0;
+                    cart.Remove(myModel);
+                }
+
+                // store  data
+                var result = new { qty = myModel.Quantity, price = myModel.Price };
+
+                
+                return Json(result, JsonRequestBehavior.AllowGet);  // jason return
+            }
+
+        }
+
     }
 }
