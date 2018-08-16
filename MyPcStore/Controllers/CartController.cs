@@ -185,8 +185,6 @@ namespace MyPcStore.Controllers
                 // list - remove model 
                 cart.Remove(myModel);
             }
-
         }
-
     }
 }
