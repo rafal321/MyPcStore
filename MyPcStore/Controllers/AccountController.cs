@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace MyPcStore.Controllers
 {
@@ -25,6 +26,39 @@ namespace MyPcStore.Controllers
                 return RedirectToAction("user-profile");
             
             return View(); // return view
+        }
+
+        // post: /account/login
+        [HttpPost]
+        public ActionResult Login(LoginUserVM myModel)
+        {
+            
+            if (!ModelState.IsValid)    // this is
+            {
+                return View(myModel);
+            }
+
+            bool isUserValid = false;   // check if the user is valid
+
+            using (Db db = new Db())
+            {
+                if (db.Users.Any(y => y.Username.Equals(myModel.Username) && y.Password.Equals(myModel.Password)))
+                {
+                    isUserValid = true;
+                }
+            }
+
+            if (!isUserValid)
+            {
+                ModelState.AddModelError("", "Invalid password or username.");
+                return View(myModel);
+            }
+            else
+            {   //save cookie or session for user
+                FormsAuthentication.SetAuthCookie(myModel.Username, myModel.RememberMe);
+                //redirect to whtever was before login page
+                return Redirect(FormsAuthentication.GetRedirectUrl(myModel.Username, myModel.RememberMe));
+            }
         }
 
 
