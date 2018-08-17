@@ -28,7 +28,7 @@ namespace MyPcStore.Controllers
             return View(); // return view
         }
 
-        // post: /account/login
+        // post: /account/login     --- LOGIN ---
         [HttpPost]
         public ActionResult Login(LoginUserVM myModel)
         {
@@ -61,7 +61,7 @@ namespace MyPcStore.Controllers
             }
         }
 
-        // get: /account/Logout
+        // get: /account/Logout     --- LOGOUT ---
         [Authorize]
         public ActionResult Logout()
         {
