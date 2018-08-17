@@ -61,6 +61,14 @@ namespace MyPcStore.Controllers
             }
         }
 
+        // get: /account/Logout
+        [Authorize]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return Redirect("~/account/login");
+        }
+
 
         // get: /account/create-account ---------------------------
         [ActionName("create-account")]
