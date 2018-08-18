@@ -138,7 +138,7 @@ namespace MyPcStore.Controllers
             return Redirect("~/account/login");
         }
 
-        [Authorize]
+
         public ActionResult UserNavPartial()
         {
             string userNam = User.Identity.Name;// get username
@@ -159,6 +159,27 @@ namespace MyPcStore.Controllers
             return PartialView(modelPartial); // return partial view with model
         }
 
+        // get : /account/user-profile
+        [HttpGet]
+        [ActionName("user-profile")]
+        public ActionResult UserProfile()
+        {
+            string userName = User.Identity.Name; // get username
+
+            UserProfileVM myModel;
+
+            using (Db db = new Db())
+            {
+                // get theuser
+                UserDTO dto = db.Users.FirstOrDefault(y => y.Username == userName);
+
+                // build  the model
+                myModel = new UserProfileVM(dto);
+            }
+
+            // Return view with model
+            return View("UserProfile", myModel);
+        }
 
     }
 }

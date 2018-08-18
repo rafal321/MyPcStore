@@ -916,6 +916,7 @@
     <Content Include="Views\Account\CreateAccount.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\UserNavPartial.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
