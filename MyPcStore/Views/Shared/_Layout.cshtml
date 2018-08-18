@@ -37,6 +37,11 @@
                         }
 
                     }
+
+                    @if(Request.IsAuthenticated)
+                    {
+                        <li>@Html.Action("UserNavPartial", "Account", new { area = "" })</li>
+                    }
                 </ul>
                 <ul class="navbar-collapse collapse navbar-right">
                     @Html.Action("CartPartial", "Cart");
