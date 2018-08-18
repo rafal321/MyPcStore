@@ -138,6 +138,28 @@ namespace MyPcStore.Controllers
             return Redirect("~/account/login");
         }
 
+        [Authorize]
+        public ActionResult UserNavPartial()
+        {
+            
+            string userNam = User.Identity.Name;// get username
+
+            UserNavPartialVM modelPartial;
+
+            using (Db db = new Db())
+            {
+                // get user
+                UserDTO userdto = db.Users.FirstOrDefault(y => y.Username == userNam);
+                
+                modelPartial = new UserNavPartialVM() // build the model
+                {
+                    FirstName = userdto.FirstName,
+                    LastName = userdto.LastName
+                };
+            }
+            return PartialView(modelPartial); // return partial view with model
+        }
+
 
     }
 }
