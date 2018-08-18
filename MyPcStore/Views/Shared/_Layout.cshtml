@@ -21,6 +21,22 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @Html.Action("PagesMenuPartial", "Pages");
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li><a href="/account/logout">Logout</a></li>
+                    }
+                    else
+                    {
+                        if (ViewBag.Title == "Login")
+                        {
+                            <li class="active"><a href="/account/login">Login</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="/account/login">Login</a></li>
+                        }
+
+                    }
                 </ul>
                 <ul class="navbar-collapse collapse navbar-right">
                     @Html.Action("CartPartial", "Cart");
@@ -31,27 +47,27 @@
     <div class="container body-content">
         <div class="row">
 
-            
+
             <div class="col-xs-12 col-md-2">
                 @Html.Action("CategoryMenuPartial", "Shop")
             </div>
-            
+
 
             @if (ViewBag.Sidebar == "Yes")
-    {
-        <div class="col-xs-12 col-md-7">
-            @RenderBody()
-        </div>
-        <div class="col-xs-12 col-md-3">
-            @Html.Action("SidebarPartial", "Pages")
-        </div>
-}
-else
-{
-        <div class="col-xs-12 col-md-10">
-            @RenderBody()
-        </div>
-}
+            {
+                <div class="col-xs-12 col-md-7">
+                    @RenderBody()
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    @Html.Action("SidebarPartial", "Pages")
+                </div>
+            }
+            else
+            {
+                <div class="col-xs-12 col-md-10">
+                    @RenderBody()
+                </div>
+            }
 
         </div>
         <hr />

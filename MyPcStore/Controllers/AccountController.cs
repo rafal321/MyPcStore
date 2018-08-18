@@ -141,7 +141,6 @@ namespace MyPcStore.Controllers
         [Authorize]
         public ActionResult UserNavPartial()
         {
-            
             string userNam = User.Identity.Name;// get username
 
             UserNavPartialVM modelPartial;
