@@ -229,6 +229,7 @@ namespace MyPcStore.Controllers
                 db.SaveChanges();
             }
 
+            TempData["SuccessMessage"] = "You have edited your profile!";
             return Redirect("~/account/user-profile"); //redirection
         }
 
