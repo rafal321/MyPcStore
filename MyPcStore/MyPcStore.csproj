@@ -196,6 +196,7 @@
     <Content Include="Content\fancybox\fancybox_sprite.png" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\glass-pipe.gif" />
+    <Content Include="Content\img\ShoppingCart.png" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
