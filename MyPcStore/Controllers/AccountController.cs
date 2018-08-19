@@ -215,8 +215,21 @@ namespace MyPcStore.Controllers
                     return View("UserProfile", myModel);
                 }
 
+                UserDTO dto = db.Users.Find(myModel.Id); // dto edit myModel.ID
+
+                dto.FirstName = myModel.FirstName;
+                dto.LastName = myModel.LastName;
+                dto.EmailAddress = myModel.EmailAddress;
+                dto.Username = myModel.Username;
+
+                if (!string.IsNullOrWhiteSpace(myModel.Password))
+                {
+                    dto.Password = myModel.Password;
+                }
+                db.SaveChanges();
             }
 
+            return Redirect("~/account/user-profile"); //redirection
         }
 
     }
