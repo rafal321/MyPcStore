@@ -181,5 +181,43 @@ namespace MyPcStore.Controllers
             return View("UserProfile", myModel);
         }
 
+
+        // post: /account/user-profile
+        [HttpPost]
+        [ActionName("user-profile")]
+        public ActionResult UserProfile(UserProfileVM myModel)
+        {
+            
+            if (!ModelState.IsValid)        // heck for model state
+            {
+                return View("UserProfile", myModel);
+            }
+
+            // passwords match or not 
+            if (!string.IsNullOrWhiteSpace(myModel.Password))
+            {
+                if (!myModel.Password.Equals(myModel.ConfirmPassword))
+                {
+                    ModelState.AddModelError("", "Your password does not match.");
+                    return View("UserProfile", myModel);
+                }
+            }
+
+            using (Db db = new Db())
+            {
+                string username = User.Identity.Name; // get username
+
+                // Make sure username is unique
+                if (db.Users.Where(y => y.Id != myModel.Id).Any(y => y.Username == username))
+                {
+                    ModelState.AddModelError("", "Username " + myModel.Username + " already exists.");
+                    myModel.Username = "";
+                    return View("UserProfile", myModel);
+                }
+
+            }
+
+        }
+
     }
 }
