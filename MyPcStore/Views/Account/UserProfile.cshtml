@@ -9,7 +9,7 @@
 
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success">
+    <div class="alert alert-success text-center">
         @TempData["SuccessMessage"]
     </div>
 }
@@ -78,3 +78,12 @@
         </div>
     </div>
 }
+
+@*<script>
+
+$(document).ready(function(){
+    $("button").click(function(){
+        $("div").animate({left: '100px'});
+    });
+});
+</script>*@
