@@ -19,7 +19,7 @@
                 <a href="/" class="navbar-brand">MyPcStore Cart</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav active">
                     @Html.Action("PagesMenuPartial", "Pages");
                     @if (Request.IsAuthenticated)
                     {
@@ -38,9 +38,16 @@
 
                     }
 
-                    @if(Request.IsAuthenticated && User.IsInRole("User"))
+                    @if (Request.IsAuthenticated && User.IsInRole("User"))
                     {
-                        <li>@Html.Action("UserNavPartial", "Account", new { area = "" })</li>
+                        if (ViewBag.Title == "User Profile")
+                        {
+                            <li class="active">@Html.Action("UserNavPartial", "Account", new { area = "" })</li>
+                        }
+                        else
+                        {
+                            <li>@Html.Action("UserNavPartial", "Account", new { area = "" })</li>
+                        }
                     }
                 </ul>
                 <ul class="navbar-collapse collapse navbar-right">
