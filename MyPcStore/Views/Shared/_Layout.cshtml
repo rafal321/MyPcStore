@@ -38,7 +38,7 @@
 
                     }
 
-                    @if(Request.IsAuthenticated)
+                    @if(Request.IsAuthenticated && User.IsInRole("User"))
                     {
                         <li>@Html.Action("UserNavPartial", "Account", new { area = "" })</li>
                     }
