@@ -31,7 +31,7 @@ namespace MyPcStore
             using (Db db = new Db())
             {
                 UserDTO dto = db.Users.FirstOrDefault(y => y.Username == user_name);
-                roles = db.UserRoles.Where(y => y.UserId == dto.Id).Select(y => y.Role.Name);
+                roles = db.UserRoles.Where(y => y.UserId == dto.Id).Select(y => y.Role.Name).ToArray();
             }
 
             IIdentity user_Identity = new GenericIdentity(user_name);
