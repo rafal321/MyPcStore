@@ -73,6 +73,12 @@ else
             <td class="grandtotal"><b>Grand Toral: </b>&euro;<span>@ViewBag.GrandTotal</span></td>
         </tr>
     </table>
+
+    <br />
+
+    @* when clicked the order will be saved in database and redirect to paypall*@
+    <a href="#" class="placeorder btn btn-primary pull-right">Checkout</a>
+
 }
 @*************************************************************@
 
@@ -151,8 +157,8 @@ else
             });
 
         });
-        //+++++++++++++++++++++++++++++++++++
+            //+++++++++++++++++++++++++++++++++++
 
     </script>
-    }
+}
 
