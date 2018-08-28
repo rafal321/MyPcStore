@@ -186,5 +186,12 @@ namespace MyPcStore.Controllers
                 cart.Remove(myModel);
             }
         }
+
+        public ActionResult PaypalPartial()     // Increment and decrement product in cart details 
+        {                                       //view so they work with paypal form
+            List<CartVM> theCart = Session["cart"] as List<CartVM>;
+
+            return PartialView(theCart);
+        }
     }
 }
