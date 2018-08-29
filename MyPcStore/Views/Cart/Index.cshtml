@@ -13,9 +13,7 @@
 }
 else
 {
-    <div class="ajaxbg"><span>
-    <img src="~/Content/img/glass-pipe.gif" />
-</span></div>
+    
     <table class="table">
         <tr>
             <th>
@@ -96,7 +94,7 @@ else
         </form>
     </div>
     <br />
-    @* when clicked the order will be saved in database and redirect to paypall*@
+    @* when clicked the order is saved in the database and redirect to paypal*@
     <a href="#" class="placeorder btn btn-primary pull-right">Checkout</a>
 
 }
@@ -188,8 +186,29 @@ else
                 });
             });
 
+            //+++++++++++++++++++++++++++++++++++
+
+            //--------  PLACE ORDER ---------------
+
+            $("a.placeorder").click(function (e) {  //anchor -placeorder
+                e.preventDefault();
+
+                var $this = $(this);
+
+                var url = "/cart/PlaceOrder";  //
+
+                $(".ajaxbg").show();    //show button
+
+                $.post(url, {}, function (data) {
+                    $(".ajaxbg span").text("Thank you. We redirect you to PayPal"); //span change
+                    setTimeout(function () {
+                        $('form input[name="submit"]').click(); //image
+                    }, 3000);
+                });
+            });
+
         });
-                    //+++++++++++++++++++++++++++++++++++
+                    
 
     </script>
 }

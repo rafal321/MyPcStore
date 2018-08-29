@@ -3,6 +3,8 @@ using MyPcStore.Models.ViewModels.Cart;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -193,5 +195,66 @@ namespace MyPcStore.Controllers
 
             return PartialView(theCart);
         }
+
+
+        // post: /Cart/PlaceOrder
+        [HttpPost]
+        public void PlaceOrder()
+        {
+            // Get cart list
+            List<CartVM> myCart = Session["cart"] as List<CartVM>;
+
+            // Get username
+            string user_name = User.Identity.Name;
+
+            int orderId = 0;
+
+            using (Db db = new Db())
+            {
+                
+                OrderDTO orderDTO = new OrderDTO(); // initialize OrderDTO
+
+                
+                var q = db.Users.FirstOrDefault(y => y.Username == user_name);
+                int userId = q.Id;                      // get user id
+
+                
+                orderDTO.UserId = userId;               // Add to OrderDTO and save
+                orderDTO.CreatedAt = DateTime.Now;      //date
+
+                db.Orders.Add(orderDTO);
+                db.SaveChanges();
+                
+                orderId = orderDTO.OrderId; // Get id
+                
+                OrderDetailsDTO orderDetails_DTO = new OrderDetailsDTO(); // initialize
+                
+                foreach (var item in myCart) // add to Order Details DTO
+                {
+                    orderDetails_DTO.OrderId = orderId;
+                    orderDetails_DTO.UserId = userId;
+                    orderDetails_DTO.ProductId = item.ProductId;
+                    orderDetails_DTO.Quantity = item.Quantity;
+
+                    db.OrderDetails.Add(orderDetails_DTO);
+
+                    db.SaveChanges();
+                }
+            }
+
+            //#############################################################################################
+            // SEND CONFIRMATION EMAIL  
+            //var client = new SmtpClient("poczta.wp.pl") // Email admin             Doesn't work!!!!
+            //{
+            //    Credentials = new NetworkCredential("therafk", ""),
+            //    EnableSsl = true
+            //};
+            //client.Send("therafk@wp.pl", "therafk@gmail", "New Order", "New order made: " + orderId);
+            //#############################################################################################
+
+
+            Session["cart"] = null; // reseting session
+        }
+
     }
 }
