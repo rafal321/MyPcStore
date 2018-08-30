@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MyPcStore.Areas.Admin.Models.ViewModels.Shop.OrdersForAdminVM>
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h2>Orders</h2>
+
+@if (!Model.Any())
+{
+    <h3 class="text-center">Orders list is Empty.</h3>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Order Number
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Order Details
+            </th>
+            <th>
+                Created At
+            </th>
+            <th>
+                Total
+            </th>
+        </tr>
+        @foreach (var itemA in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => itemA.OrderNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => itemA.Username)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => itemA.CreatedAt)
+                </td>
+                <td>
+                    &euro;@Html.DisplayFor(modelItem => itemA.Total)
+                </td>
+            </tr>
+        }
+
+    </table>
+}
