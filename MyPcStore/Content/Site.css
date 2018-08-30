@@ -65,7 +65,7 @@ ul.adminarea {
     position: relative;
     top: 15px;
 }
-/*for the checkout*/
+/*for the checkout after click*/
 .ajaxbg {
     position: absolute;
     width: 100%;
@@ -76,7 +76,7 @@ ul.adminarea {
 }
 
 
-    /*after payment ic clicked*/
+    /*after payment is clicked*/
     .ajaxbg span {
         background: red;
         position: absolute;
