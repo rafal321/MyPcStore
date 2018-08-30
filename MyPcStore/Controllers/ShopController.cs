@@ -88,5 +88,7 @@ namespace MyPcStore.Controllers
             return View("ProductDetails", myModel);
         }
 
+
+
     }
 }
