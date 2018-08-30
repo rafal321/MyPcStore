@@ -38,7 +38,12 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => itemA.Username)
                 </td>
-
+                <td>
+                    @foreach (var itemB in itemA.ProductsAndQty)
+                    {
+                        @itemB.Key @:x @itemB.Value <br />
+                    }
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => itemA.CreatedAt)
                 </td>
