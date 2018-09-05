@@ -70,7 +70,6 @@ namespace MyPcStore.Controllers
             return Redirect("~/account/login");
         }
 
-
         // get: /account/create-account ---------------------------
         [ActionName("create-account")]
         [HttpGet]
