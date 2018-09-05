@@ -63,7 +63,7 @@ namespace MyPcStore.Controllers
         }
 
         // get: /account/Logout     --- LOGOUT ---
-        [Authorize]
+        [Authorize] //only AUTHORIZE that means all the roles are allowed 
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
@@ -139,7 +139,7 @@ namespace MyPcStore.Controllers
             return Redirect("~/account/login");
         }
 
-
+        [Authorize]
         public ActionResult UserNavPartial()
         {
             string userNam = User.Identity.Name;// get username
@@ -163,6 +163,7 @@ namespace MyPcStore.Controllers
         // get : /account/user-profile
         [HttpGet]
         [ActionName("user-profile")]
+        [Authorize]
         public ActionResult UserProfile()
         {
             string userName = User.Identity.Name; // get username
@@ -186,6 +187,7 @@ namespace MyPcStore.Controllers
         // post: /account/user-profile
         [HttpPost]
         [ActionName("user-profile")]
+        [Authorize]
         public ActionResult UserProfile(UserProfileVM myModel)
         {
             
@@ -235,7 +237,7 @@ namespace MyPcStore.Controllers
         }
 
         // get: /account/Orders
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User")] //accesible only to users
         public ActionResult Orders()
         {
             List<OrdersForUserVM> ordersOverviewForUser = new List<OrdersForUserVM>(); // initialize list of OrdersForUserVM
