@@ -40,7 +40,7 @@
 
                     @if (Request.IsAuthenticated && User.IsInRole("User"))
                     {
-                        if (ViewBag.Title == "User Profile")
+                        if (ViewBag.Title == "User Profile" || ViewBag.Title == "Orders")
                         {
                             <li class="active">@Html.Action("UserNavPartial", "Account", new { area = "" })</li>
                         }
@@ -68,11 +68,6 @@
                     }
                 }
 
-
-
-
-
-
             </div>
         </div>
     </div>
@@ -80,10 +75,14 @@
         <div class="row">
             <div class="ajaxbg"><span><img src="~/Content/img/glass-pipe.gif" /></span></div>
 
+            @*if im on these pages - don't show category menu*@
+            @if (ViewBag.Title != "Create Account" && ViewBag.Title != "Login" &&
+                ViewBag.Title != "User Profile" && ViewBag.Title != "Orders")
+            {
             <div class="col-xs-12 col-md-2">
                 @Html.Action("CategoryMenuPartial", "Shop")
             </div>
-
+            }
 
             @if (ViewBag.Sidebar == "Yes")
             {
