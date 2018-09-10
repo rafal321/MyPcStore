@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - MyPcStore Cart</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-topcancel">
@@ -16,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">MyPcStore Cart</a>
+                <a href="/" class="navbar-brand">MyPcStore <i class="fas fa-store"></i></a>
             </div>
             <div class="navbar-collapse collapse active">
                 <ul class="nav navbar-nav active">
@@ -128,7 +129,8 @@ ViewBag.Title != "User Profile" && ViewBag.Title != "Orders")
         <hr />
 
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application SSSSSSSSS</p>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application | Fixed/Sticky Footer Example | </p>
+            <i class="far fa-arrow-alt-circle-left"></i>
         </footer>
     </div>
 
