@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - Admin Area</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-topcancel">
@@ -16,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/admin/dashboard" class="navbar-brand">Dashboard-d</a>
+                <a href="/admin/dashboard" class="navbar-brand">Dashboard <i class="fas fa-wrench"></i></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -36,7 +38,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Admin Area</p>
+            <p style="color: mediumspringgreen ">&copy; @DateTime.Now.Year - Admin Area <i class="fas fa-wrench"></i></p>
         </footer>
     </div>
 

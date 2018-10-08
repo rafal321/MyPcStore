@@ -1,6 +1,8 @@
 ﻿/*-chapter6- usuwa css - file for modyfying Amin Area*/
 body {
-    background-color: khaki;
+    background-image: url("~/Content/img/bImage.jpg");
+    background-repeat: repeat;
+    background-color: lightyellow;
 }
 
 
@@ -98,7 +100,7 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: red;
+    background-color: #0C8484;
     color: white;
     text-align: center;
 }
