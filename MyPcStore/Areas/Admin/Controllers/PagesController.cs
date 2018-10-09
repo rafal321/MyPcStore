@@ -89,6 +89,7 @@ namespace MyPcStore.Areas.Admin.Controllers
                 db.SaveChanges();
             }
             //Redirect
+            //TempData persists after redirection
             TempData["SuccessMessage"] = "New Page has been added successfully.";
             return RedirectToAction("AddPage");
 
