@@ -101,9 +101,7 @@ namespace MyPcStore.Areas.Admin.Controllers
         {
             //ActionResult as the return type you can return 
             //view, redirect or partial view. Or content(string) etc  
-
-
-
+            
             //declare page VM (view model)
             PageVM model;
             using (Db db = new Db())
@@ -226,7 +224,7 @@ namespace MyPcStore.Areas.Admin.Controllers
         }
         //-----------------------------------------------------------
         //POST: Admin/Pages/ReorderPages
-        //has to be httpPost - 'cause default is GET
+        //has to be httpPost - 'cause default is GET - for DragAnd Drop
         [HttpPost]
         public void ReorderPages(int[] id)
         {
