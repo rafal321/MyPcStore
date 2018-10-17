@@ -7,8 +7,9 @@ using System.Data.Entity;
 
 namespace MyPcStore.Models.Abstract
 {
-    public interface TestTDbSet : IDisposable
+    public interface ITestTDbSet : IDisposable
     {
+        //for teesting your fake database - it inherits this
 
         DbSet<PageDTO> Pages { get; }
         DbSet<SidebarDTO> Sidebar { get; }
@@ -22,6 +23,6 @@ namespace MyPcStore.Models.Abstract
 
         int SaveChanges();
         void MarkAsModified(Object item);
-
+        
     }
 }

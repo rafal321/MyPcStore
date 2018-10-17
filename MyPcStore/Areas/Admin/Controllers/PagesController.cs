@@ -11,6 +11,10 @@ namespace MyPcStore.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class PagesController : Controller
     {
+
+        //private Db db = new Db();   //for unit testing
+        
+
         // GET: Admin/Pages
         public ActionResult Index()
         {
@@ -45,7 +49,7 @@ namespace MyPcStore.Areas.Admin.Controllers
                 return View(myModel);
             }
 
-            using (Db db = new Db())
+            using (Db db = new Db())          //commented here for unitTesting
             {
                 //Declare the slug
                 string slug;
