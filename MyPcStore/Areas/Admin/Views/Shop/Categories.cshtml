@@ -4,7 +4,7 @@
     ViewBag.Title = "Categories";
 }
 
-<h2>Categories</h2>
+<h2>Categories </h2>    
 
 <div class="new-cat">
     <input type="text" id="newcatname" />
@@ -27,7 +27,9 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th></th>
+
+            <th>
+            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -136,8 +138,6 @@ else
                 }
             });
 
-          
-
             //+++++++++++++++++++++++++++
 
             /*Confirm category deletion*/
@@ -148,10 +148,7 @@ else
             });
             //+++++++++++++++++++++++++++++
 
-
-
             /*Rename category*/
-
 
             var orginalTextBoxVal;
 
@@ -200,7 +197,6 @@ else
                 });
 
             });
-
             //+++++++++++++++++++++++++++++++++++++
 
         });
