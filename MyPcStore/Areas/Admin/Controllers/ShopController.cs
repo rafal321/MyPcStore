@@ -281,7 +281,7 @@ namespace MyPcStore.Areas.Admin.Controllers
                 ViewBag.SelectedCat = catId.ToString();
             }
 
-            // pagination setup
+            // pagination setup ************************ 
             var onePageOfProducts = myListOfProductVM.ToPagedList(pageNumber, 3); //num of pages low, so i can see
             ViewBag.OnePageOfProducts = onePageOfProducts;
 

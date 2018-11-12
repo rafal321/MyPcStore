@@ -54,7 +54,7 @@
                 @product.Description
             </td>
             <td>
-                $@product.Price
+                &#8364;@product.Price
             </td>
             <td>
                 <a href="/admin/shop/editProduct/@product.Id">
@@ -62,7 +62,7 @@
                 </a>
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditProduct", new { id = product.Id }) |
+                @Html.ActionLink("Edit", "EditProduct", new { id = product.Id })
                 @Html.ActionLink("Delete", "DeleteProduct", new { id = product.Id }, new { @class = "delete"})
             </td>
         </tr>
