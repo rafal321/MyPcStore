@@ -32,9 +32,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                $@Html.DisplayFor(modelItem => item.Price)
-            </td>
+            <td >
+                <p style="font-size: 1.2em;">&#8364;@Html.DisplayFor(modelItem => item.Price)</p>
+</td>
             <td>
                 <a href="/shop/product-details/@item.Slug">
                     <img src="/Images/Uploads/Products/@item.Id/Thumbs/@item.ImageName" />

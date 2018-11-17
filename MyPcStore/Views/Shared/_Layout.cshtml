@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - MyPcStore Cart</title>
+    <title>@ViewBag.Title - MyPcStore</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -21,6 +21,9 @@
             </div>
             <div class="navbar-collapse collapse active">
                 <ul class="nav navbar-nav active">
+
+                    @*<li><a href="#">RafLink</a></li>*@
+
                     @Html.Action("PagesMenuPartial", "Pages");
                     @if (Request.IsAuthenticated)
                     {
@@ -129,8 +132,8 @@ ViewBag.Title != "User Profile" && ViewBag.Title != "Orders")
         <hr />
 
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application | Fixed/Sticky Footer Example | </p>
-            <i class="far fa-arrow-alt-circle-left"></i>
+            <p>&copy; @DateTime.Now.Year - MyPcStore Application | Main Page | <i class="fas fa-universal-access"></i></p>
+            
         </footer>
     </div>
 
