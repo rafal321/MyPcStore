@@ -5,7 +5,7 @@
 <ul>
     @foreach (var item in Model)
     {    
-        <li><a href="/shop/category/@item.Slug.ToLower()">@item.Name</a></li>  
+        <li style="list-style-type:none;"><a href="/shop/category/@item.Slug.ToLower()"><i class="far fa-caret-square-right"></i>  @item.Name</a></li>  
     }
 </ul>
 

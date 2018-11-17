@@ -131,9 +131,8 @@ namespace MyPcStore.Controllers
                 db.UserRoles.Add(userRoleDTO);
                 db.SaveChanges();
             }
-
             TempData["SuccessMessage"] = "You are registered. You can login now."; // Create a TempData message
-
+            
             // Redirect
             return Redirect("~/account/login");
         }

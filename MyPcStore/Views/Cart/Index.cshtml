@@ -55,8 +55,8 @@ else
                     <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
                 </td>
                 <td>
-                    <a href="#" class="incrproduct" data-id="@item.ProductId">+</a>
-                    <a href="#" class="decrproduct" data-id="@item.ProductId">-</a>
+                    <a href="#" class="incrproduct" data-id="@item.ProductId"><i class="far fa-plus-square"> </i></a>
+                    <a href="#" class="decrproduct" data-id="@item.ProductId"><i class="far fa-minus-square"> </i></a>
                     <a href="#" class="removeproduct" data-id="@item.ProductId">Remove</a>
                 </td>
                 <td class="total@(item.ProductId)">
@@ -118,7 +118,7 @@ else
                     $("td.qty" + productId).html(data.qty);
 
                     var price = data.qty * data.price;
-                    var priceHtml = "$&euro;" + price.toFixed(2);
+                    var priceHtml = "&euro;" + price.toFixed(2);
 
                     $("td.total" + productId).html(priceHtml);
 
@@ -155,7 +155,7 @@ else
                         $("td.qty" + productId).html(data.qty);
 
                         var price = data.qty * data.price;
-                        var priceHtml = "$" + price.toFixed(2);
+                        var priceHtml = "&euro;" + price.toFixed(2);
 
                         $("td.total" + productId).html(priceHtml);
 

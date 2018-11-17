@@ -48,16 +48,17 @@ span.ajaxmsg {
     bottom: 0;
 }
 
-/*rozd46 top right corner position adjustments CartVM*/
+/*rozd46 top right corner position adjustments CartVM* 'this is class'*/
 
 .ajaxcart {
-    background: gray;
+    background: LemonChiffon;
     position: relative;
     top: 5px;
-    border-radius: 10px;
-    border: 2px solid #73AD21;
+    border-radius: 5px;
+    border: 3px solid #0C8484;
     padding: 5px;
 }
+
 /*ib-inline block 47*/
 .ib {
     display: inline-block !important;

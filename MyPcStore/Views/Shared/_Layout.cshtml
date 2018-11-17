@@ -24,20 +24,20 @@
 
                     @*<li><a href="#">RafLink</a></li>*@
 
-                    @Html.Action("PagesMenuPartial", "Pages");
+                    @Html.Action("PagesMenuPartial", "Pages")
                     @if (Request.IsAuthenticated)
                     {
-                        <li><a href="/account/logout">Logout</a></li>
+                        <li><a href="/account/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                     }
                     else
                     {
                         if (ViewBag.Title == "Login")
                         {
-                            <li class="active"><a href="/account/login">Login</a></li>
+                            <li class="active"><a href="/account/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
                         }
                         else
                         {
-                            <li><a href="/account/login">Login</a></li>
+                            <li><a href="/account/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
                         }
 
                     }
