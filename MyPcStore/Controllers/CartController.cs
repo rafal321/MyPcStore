@@ -243,8 +243,8 @@ namespace MyPcStore.Controllers
             }
 
             //#############################################################################################
-            // SEND CONFIRMATION EMAIL  
-            //var client = new SmtpClient("poczta.wp.pl") // Email admin             Doesn't work!!!!
+            //// SEND CONFIRMATION EMAIL  
+            //var client = new SmtpClient("mailtrap.io") // Email admin             Doesn't work!!!!
             //{
             //    Credentials = new NetworkCredential("therafk", ""),
             //    EnableSsl = true
