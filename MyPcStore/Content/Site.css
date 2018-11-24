@@ -1,6 +1,6 @@
 ﻿/*-chapter6- usuwa css - file for modyfying Amin Area*/
 body {
-    background-image: url("~/Content/img/bImage.jpg");
+    /*background-image: url("~/Content/img/bImage.jpg");*/
     background-repeat: repeat;
     background-color: lightyellow;
 }

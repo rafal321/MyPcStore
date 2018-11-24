@@ -55,8 +55,8 @@ else
                     <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
                 </td>
                 <td>
-                    <a href="#" class="incrproduct" data-id="@item.ProductId"><i class="far fa-plus-square"> </i></a>
-                    <a href="#" class="decrproduct" data-id="@item.ProductId"><i class="far fa-minus-square"> </i></a>
+                    <a href="#" class="incrproduct" data-id="@item.ProductId"><i class="far fa-plus-square"></i></a>
+                    <a href="#" class="decrproduct" data-id="@item.ProductId"><i class="far fa-minus-square"></i></a>
                     <a href="#" class="removeproduct" data-id="@item.ProductId">Remove</a>
                 </td>
                 <td class="total@(item.ProductId)">
@@ -75,7 +75,7 @@ else
         </tr>
     </table>
 
-    <div class="paypaldiv">
+    <div class="paypal">
         <form class="paypalform" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
             <input type="hidden" name="cmd" value="_cart">
             <input type="hidden" name="upload" value="1">
@@ -95,7 +95,7 @@ else
     </div>
     <br />
     @* when clicked the order is saved in the database and redirect to paypal*@
-    <a href="#" class="placeorder btn btn-primary pull-right">Checkout</a>
+    <a href="#" class="placeorder btn btn-primary pull-right"><i class="fas fa-shopping-cart"></i> Checkout</a>
 
 }
 @*************************************************************@
