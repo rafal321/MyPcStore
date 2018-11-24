@@ -101,9 +101,10 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #0C8484;
+    background-color: rgba(012, 132, 132, 0.8);
     color: white;
     text-align: center;
     padding-top: 10px;
+    z-index: 99;
 }
 
