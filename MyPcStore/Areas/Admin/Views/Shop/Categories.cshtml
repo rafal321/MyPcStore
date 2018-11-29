@@ -27,8 +27,9 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-
-            <th>
+            
+            <th style="color:burlywood">
+                Drag&Drop <i class="far fa-hand-point-up"></i>
             </th>
         </tr>
 
@@ -43,7 +44,7 @@ else
                 <td>
                     @Html.ActionLink("Delete", "DeleteCategory", new { id = item.Id }, new { @class = "delete" })
                 </td>
-            </tr>
+              </tr>
         }
 
     </table>
